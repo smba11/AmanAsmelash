@@ -14,9 +14,10 @@ interface FlipCardProps {
   target: { x: number; y: number; rotation: number; scale: number; opacity: number }
 }
 
-const IMG_WIDTH = 60
-const IMG_HEIGHT = 85
+const IMG_WIDTH = 92
+const IMG_HEIGHT = 130
 const MAX_SCROLL = 3000
+const RELEASE_SCROLL = MAX_SCROLL - 40
 
 const lerp = (start: number, end: number, t: number) => start * (1 - t) + end * t
 
@@ -118,6 +119,13 @@ export default function IntroAnimation() {
     if (!container) return
 
     const handleWheel = (e: WheelEvent) => {
+      const wantsPastEnd = scrollRef.current >= RELEASE_SCROLL && e.deltaY > 0
+      const wantsBeforeStart = scrollRef.current <= 0 && e.deltaY < 0
+
+      if (wantsPastEnd || wantsBeforeStart) {
+        return
+      }
+
       e.preventDefault()
       const newScroll = Math.min(Math.max(scrollRef.current + e.deltaY, 0), MAX_SCROLL)
       scrollRef.current = newScroll
@@ -133,6 +141,14 @@ export default function IntroAnimation() {
       const deltaY = touchStartY - touchY
       touchStartY = touchY
 
+      const wantsPastEnd = scrollRef.current >= RELEASE_SCROLL && deltaY > 0
+      const wantsBeforeStart = scrollRef.current <= 0 && deltaY < 0
+
+      if (wantsPastEnd || wantsBeforeStart) {
+        return
+      }
+
+      e.preventDefault()
       const newScroll = Math.min(Math.max(scrollRef.current + deltaY, 0), MAX_SCROLL)
       scrollRef.current = newScroll
       virtualScroll.set(newScroll)
@@ -207,17 +223,14 @@ export default function IntroAnimation() {
     }
   }, [smoothMorph, smoothMouseX, smoothScrollRotate])
 
-  const contentOpacity = useTransform(smoothMorph, [0.8, 1], [0, 1])
-  const contentY = useTransform(smoothMorph, [0.8, 1], [20, 0])
-
   return (
     <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-[#FAFAFA]">
       <div className="flex h-full w-full flex-col items-center justify-center [perspective:1000px]">
         <div className="absolute left-6 top-6 z-20 md:left-10 md:top-10">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Aman Asmelash</p>
-          <h1 className="mt-3 max-w-lg text-4xl font-semibold leading-none text-gray-950 md:text-7xl">
-            Projects in motion.
-          </h1>
+          <p className="mt-3 max-w-sm text-sm leading-6 text-gray-600 md:text-base">
+            Scroll the cards. Flip one to open the project.
+          </p>
         </div>
 
         <div className="pointer-events-none absolute top-1/2 z-0 flex -translate-y-1/2 flex-col items-center justify-center text-center">
@@ -243,16 +256,6 @@ export default function IntroAnimation() {
           </motion.p>
         </div>
 
-        <motion.div
-          style={{ opacity: contentOpacity, y: contentY }}
-          className="pointer-events-none absolute top-[10%] z-10 flex flex-col items-center justify-center px-4 text-center"
-        >
-          <h2 className="mb-4 text-3xl font-semibold tracking-tight text-gray-900 md:text-5xl">Explore the Work</h2>
-          <p className="max-w-lg text-sm leading-relaxed text-gray-600 md:text-base">
-            Each card is one project. Flip a card to open the live build or repo.
-          </p>
-        </motion.div>
-
         <div className="relative flex h-full w-full items-center justify-center">
           {projects.map((project, i) => {
             let target = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 }
@@ -260,7 +263,7 @@ export default function IntroAnimation() {
             if (introPhase === "scatter") {
               target = scatterPositions[i]
             } else if (introPhase === "line") {
-              const lineSpacing = 70
+              const lineSpacing = 108
               const lineTotalWidth = totalProjects * lineSpacing
               const lineX = i * lineSpacing - lineTotalWidth / 2
               target = { x: lineX, y: 0, rotation: 0, scale: 1, opacity: 1 }
@@ -293,7 +296,7 @@ export default function IntroAnimation() {
                 x: Math.cos(arcRad) * arcRadius + parallaxValue,
                 y: Math.sin(arcRad) * arcRadius + arcCenterY,
                 rotation: currentArcAngle + 90,
-                scale: isMobile ? 1.4 : 1.8,
+                scale: isMobile ? 1.18 : 1.5,
               }
 
               target = {
