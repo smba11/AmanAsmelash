@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aman Asmelash | Project Launcher</title>
+    <link rel="preconnect" href="https://avatars.githubusercontent.com" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="identity" href="https://github.com/smba11/AmanAsmelash" target="_blank" rel="noreferrer">
+        <span class="mark" aria-hidden="true">A</span>
+        <span>Aman</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#projects" aria-current="page">Projects</a>
+        <a href="https://www.linkedin.com/in/aman-asmelash-7727472b3/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://github.com/smba11" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="projects" class="project-os">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">&gt; select a project</p>
+        <h1 id="page-title">Aman Asmelash</h1>
+        <p class="role">Student Developer</p>
+        <p class="summary">
+          I build things that live on the web. Tools, experiments, and ideas shipped as code.
+        </p>
+        <div class="intro-actions" aria-label="Profile links">
+          <a class="profile-action is-primary" href="https://github.com/smba11" target="_blank" rel="noreferrer">
+            <span aria-hidden="true">⌘</span>
+            GitHub
+            <span aria-hidden="true">↗</span>
+          </a>
+          <a class="profile-action" href="https://www.linkedin.com/in/aman-asmelash-7727472b3/" target="_blank" rel="noreferrer">
+            <span aria-hidden="true">in</span>
+            LinkedIn
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <p class="terminal-line"><span>aman@dev:~$</span> building | learning | shipping</p>
+      </section>
+
+      <section class="launcher-shell" aria-label="Project launcher">
+        <p class="launcher-title">Project Launcher</p>
+        <div class="dial" aria-hidden="true"></div>
+        <div class="launcher" id="launcher"></div>
+        <div class="launcher-controls">
+          <button class="icon-button" id="prevProject" type="button" aria-label="Previous project">‹</button>
+          <div class="pager" id="pager" aria-hidden="true"></div>
+          <button class="icon-button" id="nextProject" type="button" aria-label="Next project">›</button>
+        </div>
+      </section>
+
+      <aside class="project-panel" aria-live="polite">
+        <div class="panel-head">
+          <div class="selected-icon" id="selectedIcon" aria-hidden="true"></div>
+          <div>
+            <p class="panel-kicker" id="selectedVisibility">Public</p>
+            <h2 id="selectedName">Project</h2>
+          </div>
+        </div>
+
+        <p class="project-description" id="selectedDescription"></p>
+
+          <dl class="repo-meta">
+          <div>
+            <dt>Repo</dt>
+            <dd id="selectedRepo"></dd>
+          </div>
+          <div>
+            <dt>Branch</dt>
+            <dd id="selectedBranch"></dd>
+          </div>
+          <div>
+            <dt>Size</dt>
+            <dd id="selectedSize"></dd>
+          </div>
+          <div>
+            <dt>Focus</dt>
+            <dd id="selectedFocus"></dd>
+          </div>
+        </dl>
+
+        <div class="panel-actions">
+          <a class="primary-action" id="githubLink" href="#" target="_blank" rel="noreferrer">
+            Open Repo
+            <span aria-hidden="true">↗</span>
+          </a>
+          <a class="primary-action secondary-link" href="https://github.com/smba11/AmanAsmelash" target="_blank" rel="noreferrer">
+            Portfolio Repo
+            <span aria-hidden="true">↗</span>
+          </a>
+          <button class="secondary-action" id="focusLauncher" type="button" aria-label="Focus project launcher">
+            ⌘
+          </button>
+        </div>
+
+        <div class="activity">
+          <p class="section-label">Project Notes</p>
+          <ul id="notes"></ul>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="status-bar">
+      <span class="status-mark" aria-hidden="true">&lt;/&gt;</span>
+      <span>Building tools. Solving problems. Shipping code.</span>
+      <span class="status-stat">12 repos</span>
+      <span class="status-stat">Portfolio: AmanAsmelash</span>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
