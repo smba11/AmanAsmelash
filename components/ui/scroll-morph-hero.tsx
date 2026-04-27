@@ -2,46 +2,25 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { portfolioProjects } from "@/src/projects"
 
 export type AnimationPhase = "scatter" | "line" | "circle" | "bottom-strip"
 
 interface FlipCardProps {
-  src: string
+  project: (typeof portfolioProjects)[number]
   index: number
+  total: number
+  phase: AnimationPhase
   target: { x: number; y: number; rotation: number; scale: number; opacity: number }
 }
 
 const IMG_WIDTH = 60
 const IMG_HEIGHT = 85
-const TOTAL_IMAGES = 20
 const MAX_SCROLL = 3000
-
-const IMAGES = [
-  "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&q=80",
-  "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=300&q=80",
-  "https://images.unsplash.com/photo-1497366216548-37526070297c?w=300&q=80",
-  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=300&q=80",
-  "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=300&q=80",
-  "https://images.unsplash.com/photo-1506765515384-028b60a970df?w=300&q=80",
-  "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&q=80",
-  "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=300&q=80",
-  "https://images.unsplash.com/photo-1500485035595-cbe6f645feb1?w=300&q=80",
-  "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&q=80",
-  "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&q=80",
-  "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=300&q=80",
-  "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&q=80",
-  "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=300&q=80",
-  "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=300&q=80",
-  "https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=300&q=80",
-  "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=300&q=80",
-  "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=300&q=80",
-  "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=300&q=80",
-  "https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?w=300&q=80",
-]
 
 const lerp = (start: number, end: number, t: number) => start * (1 - t) + end * t
 
-function FlipCard({ src, index, target }: FlipCardProps) {
+function FlipCard({ project, index, target }: FlipCardProps) {
   return (
     <motion.div
       animate={{
@@ -75,8 +54,11 @@ function FlipCard({ src, index, target }: FlipCardProps) {
           className="absolute inset-0 h-full w-full overflow-hidden rounded-xl bg-gray-200 shadow-lg"
           style={{ backfaceVisibility: "hidden" }}
         >
-          <img src={src} alt={`hero-${index}`} className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent" />
+          <img src={project.image} alt={project.title} className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent transition-colors group-hover:from-black/20" />
+          <div className="absolute bottom-1.5 left-1.5 right-1.5 truncate text-[7px] font-bold text-white drop-shadow">
+            {project.title}
+          </div>
         </div>
 
         <div
@@ -84,8 +66,15 @@ function FlipCard({ src, index, target }: FlipCardProps) {
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
           <div className="text-center">
-            <p className="mb-1 text-[8px] font-bold uppercase tracking-widest text-blue-400">View</p>
-            <p className="text-xs font-medium text-white">Details</p>
+            <p className="mb-1 text-[8px] font-bold uppercase tracking-widest text-blue-400">{project.category}</p>
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs font-medium text-white underline-offset-4 hover:underline"
+            >
+              Open
+            </a>
           </div>
         </div>
       </motion.div>
@@ -190,15 +179,18 @@ export default function IntroAnimation() {
     }
   }, [])
 
+  const projects = portfolioProjects
+  const totalProjects = projects.length
+
   const scatterPositions = useMemo(() => {
-    return IMAGES.map(() => ({
+    return projects.map(() => ({
       x: (Math.random() - 0.5) * 1500,
       y: (Math.random() - 0.5) * 1000,
       rotation: (Math.random() - 0.5) * 180,
       scale: 0.6,
       opacity: 0,
     }))
-  }, [])
+  }, [projects])
 
   const [morphValue, setMorphValue] = useState(0)
   const [rotateValue, setRotateValue] = useState(0)
@@ -221,6 +213,13 @@ export default function IntroAnimation() {
   return (
     <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-[#FAFAFA]">
       <div className="flex h-full w-full flex-col items-center justify-center [perspective:1000px]">
+        <div className="absolute left-6 top-6 z-20 md:left-10 md:top-10">
+          <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Aman Asmelash</p>
+          <h1 className="mt-3 max-w-lg text-4xl font-semibold leading-none text-gray-950 md:text-7xl">
+            Projects in motion.
+          </h1>
+        </div>
+
         <div className="pointer-events-none absolute top-1/2 z-0 flex -translate-y-1/2 flex-col items-center justify-center text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
@@ -232,7 +231,7 @@ export default function IntroAnimation() {
             transition={{ duration: 1 }}
             className="text-2xl font-medium tracking-tight text-gray-800 md:text-4xl"
           >
-            The future is built on projects.
+            Scroll through the projects.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -240,7 +239,7 @@ export default function IntroAnimation() {
             transition={{ duration: 1, delay: 0.2 }}
             className="mt-4 text-xs font-bold tracking-[0.2em] text-gray-500"
           >
-            SCROLL TO EXPLORE
+            SCROLL OR SWIPE
           </motion.p>
         </div>
 
@@ -250,26 +249,26 @@ export default function IntroAnimation() {
         >
           <h2 className="mb-4 text-3xl font-semibold tracking-tight text-gray-900 md:text-5xl">Explore the Work</h2>
           <p className="max-w-lg text-sm leading-relaxed text-gray-600 md:text-base">
-            Scroll through a collection of project snapshots and open the live builds below.
+            Each card is one project. Flip a card to open the live build or repo.
           </p>
         </motion.div>
 
         <div className="relative flex h-full w-full items-center justify-center">
-          {IMAGES.slice(0, TOTAL_IMAGES).map((src, i) => {
+          {projects.map((project, i) => {
             let target = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 }
 
             if (introPhase === "scatter") {
               target = scatterPositions[i]
             } else if (introPhase === "line") {
               const lineSpacing = 70
-              const lineTotalWidth = TOTAL_IMAGES * lineSpacing
+              const lineTotalWidth = totalProjects * lineSpacing
               const lineX = i * lineSpacing - lineTotalWidth / 2
               target = { x: lineX, y: 0, rotation: 0, scale: 1, opacity: 1 }
             } else {
               const isMobile = containerSize.width < 768
               const minDimension = Math.min(containerSize.width, containerSize.height)
               const circleRadius = Math.min(minDimension * 0.35, 350)
-              const circleAngle = (i / TOTAL_IMAGES) * 360
+              const circleAngle = (i / totalProjects) * 360
               const circleRad = (circleAngle * Math.PI) / 180
               const circlePos = {
                 x: Math.cos(circleRad) * circleRadius,
@@ -283,7 +282,7 @@ export default function IntroAnimation() {
               const arcCenterY = arcApexY + arcRadius
               const spreadAngle = isMobile ? 100 : 130
               const startAngle = -90 - spreadAngle / 2
-              const step = spreadAngle / (TOTAL_IMAGES - 1)
+              const step = spreadAngle / (totalProjects - 1)
               const scrollProgress = Math.min(Math.max(rotateValue / 360, 0), 1)
               const maxRotation = spreadAngle * 0.8
               const boundedRotation = -scrollProgress * maxRotation
@@ -306,7 +305,7 @@ export default function IntroAnimation() {
               }
             }
 
-            return <FlipCard key={i} src={src} index={i} target={target} />
+            return <FlipCard key={project.id} project={project} index={i} total={totalProjects} phase={introPhase} target={target} />
           })}
         </div>
       </div>
