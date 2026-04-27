@@ -5,8 +5,12 @@ import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { ArrowUpRight } from "lucide-react"
 import { portfolioProjects } from "@/src/projects"
+import { GooeyFilter } from "@/components/ui/gooey-filter"
+import { PixelTrail } from "@/components/ui/pixel-trail"
+import { useScreenSize } from "@/hooks/use-screen-size"
 
 export function ProjectShowcase() {
+  const screenSize = useScreenSize()
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [smoothPosition, setSmoothPosition] = useState({ x: 0, y: 0 })
@@ -55,16 +59,36 @@ export function ProjectShowcase() {
   }
 
   return (
-    <section ref={containerRef} onMouseMove={handleMouseMove} className="relative w-full px-6 py-16">
-      <div className="mb-8 flex items-end justify-between gap-6">
+    <section
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      className="relative mx-auto grid min-h-screen w-full max-w-7xl overflow-hidden rounded-lg border border-border bg-black px-6 py-12 text-white md:px-10 md:py-16"
+    >
+      <img
+        src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2200&auto=format&fit=crop"
+        alt=""
+        className="absolute inset-0 size-full object-cover opacity-20"
+      />
+      <GooeyFilter id="gooey-filter-projects" strength={5} />
+      <div className="absolute inset-0 z-0" style={{ filter: "url(#gooey-filter-projects)" }}>
+        <PixelTrail
+          pixelSize={screenSize.lessThan("md") ? 24 : 32}
+          fadeDuration={0}
+          delay={500}
+          pixelClassName="bg-white"
+        />
+      </div>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/35 via-black/75 to-black" />
+
+      <div className="relative z-10 mb-10 flex items-end justify-between gap-6">
         <div>
-          <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">Selected Work</p>
-          <h2 className="mt-3 max-w-xl text-4xl font-semibold leading-tight text-foreground md:text-6xl">
+          <p className="text-sm font-medium uppercase tracking-wide text-white/60">Selected Work</p>
+          <h2 className="mt-3 max-w-2xl text-4xl font-semibold leading-tight text-white md:text-7xl">
             All projects, built as a browsable portfolio surface.
           </h2>
         </div>
-        <p className="hidden max-w-xs text-sm leading-6 text-muted-foreground md:block">
-          Hover a project for a visual preview, then open the repo when something catches your eye.
+        <p className="hidden max-w-xs text-sm leading-6 text-white/60 md:block">
+          Hover a project for a visual preview, then open the live build or repo when something catches your eye.
         </p>
       </div>
 
@@ -97,7 +121,7 @@ export function ProjectShowcase() {
         </div>
       </div>
 
-      <div>
+      <div className="relative z-10 self-end">
         {portfolioProjects.map((project, index) => (
           <a
             key={project.title}
@@ -108,9 +132,9 @@ export function ProjectShowcase() {
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
           >
-            <div className="relative border-t border-border py-5 transition-all duration-300 ease-out">
+            <div className="relative border-t border-white/15 py-5 transition-all duration-300 ease-out">
               <div
-                className={`absolute inset-0 -mx-4 rounded-lg bg-secondary/50 px-4 transition-all duration-300 ease-out ${
+                className={`absolute inset-0 -mx-4 rounded-lg bg-white/10 px-4 transition-all duration-300 ease-out ${
                   hoveredIndex === index ? "scale-100 opacity-100" : "scale-95 opacity-0"
                 }`}
               />
@@ -118,11 +142,11 @@ export function ProjectShowcase() {
               <div className="relative flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">
                   <div className="inline-flex items-center gap-2">
-                    <h3 className="text-lg font-medium tracking-tight text-foreground">
+                    <h3 className="text-lg font-medium tracking-tight text-white">
                       <span className="relative">
                         {project.title}
                         <span
-                          className={`absolute -bottom-0.5 left-0 h-px bg-foreground transition-all duration-300 ease-out ${
+                          className={`absolute -bottom-0.5 left-0 h-px bg-white transition-all duration-300 ease-out ${
                             hoveredIndex === index ? "w-full" : "w-0"
                           }`}
                         />
@@ -130,7 +154,7 @@ export function ProjectShowcase() {
                     </h3>
 
                     <ArrowUpRight
-                      className={`size-4 text-muted-foreground transition-all duration-300 ease-out ${
+                      className={`size-4 text-white/60 transition-all duration-300 ease-out ${
                         hoveredIndex === index
                           ? "translate-x-0 translate-y-0 opacity-100"
                           : "-translate-x-2 translate-y-2 opacity-0"
@@ -140,7 +164,7 @@ export function ProjectShowcase() {
 
                   <p
                     className={`mt-1 text-sm leading-relaxed transition-all duration-300 ease-out ${
-                      hoveredIndex === index ? "text-foreground/70" : "text-muted-foreground"
+                      hoveredIndex === index ? "text-white/80" : "text-white/55"
                     }`}
                   >
                     {project.description}
@@ -148,8 +172,8 @@ export function ProjectShowcase() {
                 </div>
 
                 <span
-                  className={`font-mono text-xs tabular-nums text-muted-foreground transition-all duration-300 ease-out ${
-                    hoveredIndex === index ? "text-foreground/60" : ""
+                  className={`font-mono text-xs tabular-nums text-white/50 transition-all duration-300 ease-out ${
+                    hoveredIndex === index ? "text-white/70" : ""
                   }`}
                 >
                   {project.year}
@@ -159,7 +183,7 @@ export function ProjectShowcase() {
           </a>
         ))}
 
-        <div className="border-t border-border" />
+        <div className="border-t border-white/15" />
       </div>
     </section>
   )

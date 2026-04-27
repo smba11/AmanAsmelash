@@ -2,6 +2,8 @@ import { Code2, Network } from "lucide-react"
 import { ProjectShowcase } from "@/components/ui/project-showcase"
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline"
 import { Button } from "@/components/ui/button"
+import { LiquidButton } from "@/components/ui/liquid-glass-button"
+import IntroAnimation from "@/components/ui/scroll-morph-hero"
 import { portfolioProjects } from "@/src/projects"
 
 const timelineData = portfolioProjects.map((project) => ({
@@ -21,9 +23,8 @@ export default function App() {
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
-          <a href="https://github.com/smba11/AmanAsmelash" className="flex items-center gap-3 font-semibold">
-            <span className="grid size-10 place-items-center rounded-full bg-primary text-primary-foreground">A</span>
-            <span>Aman Asmelash</span>
+          <a href="https://github.com/smba11/AmanAsmelash" className="font-semibold">
+            Aman Asmelash
           </a>
           <nav className="flex items-center gap-2" aria-label="Primary navigation">
             <Button asChild variant="ghost" size="sm">
@@ -45,7 +46,7 @@ export default function App() {
         </div>
       </header>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:py-24">
+      <section className="mx-auto grid min-h-[calc(100vh-73px)] max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:py-20">
         <div>
           <p className="font-mono text-sm text-primary">&gt; project launcher</p>
           <h1 className="mt-5 max-w-3xl text-5xl font-semibold leading-none md:text-7xl">
@@ -56,12 +57,14 @@ export default function App() {
             experiments, and portfolio work from GitHub.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild>
-              <a href="https://github.com/smba11/AmanAsmelash" target="_blank" rel="noreferrer">
-                <Code2 data-icon="inline-start" />
-                Portfolio Repo
-              </a>
-            </Button>
+            <LiquidButton
+              size="xl"
+              className="text-primary-foreground"
+              onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+            >
+              <Code2 data-icon="inline-start" />
+              View Projects
+            </LiquidButton>
             <Button asChild variant="outline">
               <a href="https://www.linkedin.com/in/aman-asmelash-7727472b3/" target="_blank" rel="noreferrer">
                 <Network data-icon="inline-start" />
@@ -71,12 +74,17 @@ export default function App() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-border bg-card p-3">
-          <RadialOrbitalTimeline timelineData={timelineData} />
+        <div className="grid gap-4">
+          <div className="h-[360px] overflow-hidden rounded-lg border border-border bg-card md:h-[460px]">
+            <IntroAnimation />
+          </div>
+          <div className="rounded-lg border border-border bg-card p-3">
+            <RadialOrbitalTimeline timelineData={timelineData} />
+          </div>
         </div>
       </section>
 
-      <section id="projects" className="mx-auto max-w-5xl px-5 pb-20">
+      <section id="projects" className="min-h-screen px-5 py-10">
         <ProjectShowcase />
       </section>
     </main>
