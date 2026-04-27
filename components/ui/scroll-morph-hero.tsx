@@ -20,6 +20,7 @@ const MAX_SCROLL = 3000
 const RELEASE_SCROLL = MAX_SCROLL - 40
 
 const lerp = (start: number, end: number, t: number) => start * (1 - t) + end * t
+const wrap = (value: number, length: number) => ((value % length) + length) % length
 
 function FlipCard({ project, index, target }: FlipCardProps) {
   return (
@@ -228,9 +229,6 @@ export default function IntroAnimation() {
       <div className="flex h-full w-full flex-col items-center justify-center [perspective:1000px]">
         <div className="absolute left-6 top-6 z-20 md:left-10 md:top-10">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Aman Asmelash</p>
-          <p className="mt-3 max-w-sm text-sm leading-6 text-gray-600 md:text-base">
-            Scroll the cards. Flip one to open the project.
-          </p>
         </div>
 
         <div className="pointer-events-none absolute top-1/2 z-0 flex -translate-y-1/2 flex-col items-center justify-center text-center">
@@ -285,11 +283,11 @@ export default function IntroAnimation() {
               const arcCenterY = arcApexY + arcRadius
               const spreadAngle = isMobile ? 100 : 130
               const startAngle = -90 - spreadAngle / 2
-              const step = spreadAngle / (totalProjects - 1)
+              const step = spreadAngle / totalProjects
               const scrollProgress = Math.min(Math.max(rotateValue / 360, 0), 1)
-              const maxRotation = spreadAngle * 0.8
-              const boundedRotation = -scrollProgress * maxRotation
-              const currentArcAngle = startAngle + i * step + boundedRotation
+              const carouselOffset = scrollProgress * totalProjects
+              const wrappedIndex = wrap(i - carouselOffset, totalProjects)
+              const currentArcAngle = startAngle + wrappedIndex * step
               const arcRad = (currentArcAngle * Math.PI) / 180
 
               const arcPos = {

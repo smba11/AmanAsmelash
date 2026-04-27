@@ -33,13 +33,47 @@ export default function App() {
         <IntroAnimation />
       </section>
 
-      <section className="mx-auto grid min-h-screen max-w-6xl place-items-center px-5 py-24">
-        <div className="max-w-2xl">
-          <p className="font-mono text-sm text-primary">&gt; selected links</p>
-          <h2 className="mt-4 text-4xl font-semibold leading-tight md:text-6xl">The cards are the index.</h2>
-          <p className="mt-5 text-lg leading-8 text-muted-foreground">
-            Scroll through the arc, pick a project, and use the back face of each card to jump into the live build or repo.
+      <section id="about" className="mx-auto grid min-h-screen max-w-6xl place-items-center px-5 py-24">
+        <div className="grid w-full gap-12 md:grid-cols-[0.8fr_1.2fr] md:items-end">
+          <div>
+            <p className="font-mono text-sm text-primary">&gt; about</p>
+            <h2 className="mt-4 text-4xl font-semibold leading-tight md:text-6xl">I build small ideas until they feel real.</h2>
+          </div>
+          <div className="space-y-6 text-lg leading-8 text-muted-foreground">
+            <p>
+              I am Aman Asmelash, a developer who likes turning rough ideas into usable web experiences. My projects move between
+              games, music tools, planning helpers, and experiments that help me sharpen the way products feel.
+            </p>
+            <p>
+              This site is meant to be a living shelf for that work: quick to browse, visual first, and easy to keep adding to as
+              the projects grow.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="mx-auto grid min-h-screen max-w-6xl place-items-center px-5 py-24">
+        <div className="w-full max-w-3xl">
+          <p className="font-mono text-sm text-primary">&gt; contact</p>
+          <h2 className="mt-4 text-4xl font-semibold leading-tight md:text-6xl">Want to build something or talk through an idea?</h2>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+            Reach out through LinkedIn or GitHub. I am always down to compare notes on projects, products, and what makes an
+            interface feel sharp.
           </p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Button asChild size="lg">
+              <a href="https://www.linkedin.com/in/aman-asmelash-7727472b3/" target="_blank" rel="noreferrer">
+                <Network data-icon="inline-start" />
+                LinkedIn
+              </a>
+            </Button>
+            <Button asChild variant="secondary" size="lg">
+              <a href="https://github.com/smba11" target="_blank" rel="noreferrer">
+                <Code2 data-icon="inline-start" />
+                GitHub
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
     </main>
