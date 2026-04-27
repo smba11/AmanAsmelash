@@ -1,5 +1,4 @@
 import { Code2, Network } from "lucide-react"
-import { ProjectShowcase } from "@/components/ui/project-showcase"
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline"
 import { Button } from "@/components/ui/button"
 import { LiquidButton } from "@/components/ui/liquid-glass-button"
@@ -13,6 +12,8 @@ const timelineData = portfolioProjects.map((project) => ({
   content: project.description,
   category: project.category,
   icon: project.icon,
+  link: project.link,
+  image: project.image,
   relatedIds: project.relatedIds,
   status: project.status,
   energy: project.energy,
@@ -74,18 +75,15 @@ export default function App() {
           </div>
         </div>
 
-        <div className="grid gap-4">
-          <div className="h-[360px] overflow-hidden rounded-lg border border-border bg-card md:h-[460px]">
+        <div>
+          <div className="h-[420px] overflow-hidden rounded-lg border border-border bg-card md:h-[560px]">
             <IntroAnimation />
-          </div>
-          <div className="rounded-lg border border-border bg-card p-3">
-            <RadialOrbitalTimeline timelineData={timelineData} />
           </div>
         </div>
       </section>
 
-      <section id="projects" className="min-h-screen px-5 py-10">
-        <ProjectShowcase />
+      <section id="projects" className="min-h-screen px-3 py-3 md:px-5 md:py-5">
+        <RadialOrbitalTimeline timelineData={timelineData} />
       </section>
     </main>
   )
