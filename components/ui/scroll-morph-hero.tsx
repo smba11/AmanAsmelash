@@ -240,7 +240,7 @@ export default function IntroAnimation() {
                 : { opacity: 0, filter: "blur(10px)" }
             }
             transition={{ duration: 1 }}
-            className="text-2xl font-medium tracking-tight text-gray-800 md:text-4xl"
+            className="max-w-52 text-lg font-medium leading-tight tracking-tight text-gray-800 md:max-w-72 md:text-2xl"
           >
             Scroll through the projects.
           </motion.h1>
@@ -248,7 +248,7 @@ export default function IntroAnimation() {
             initial={{ opacity: 0 }}
             animate={introPhase === "circle" && morphValue < 0.5 ? { opacity: 0.5 - morphValue } : { opacity: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="mt-4 text-xs font-bold tracking-[0.2em] text-gray-500"
+            className="mt-3 text-[10px] font-bold tracking-[0.18em] text-gray-500"
           >
             SCROLL OR SWIPE
           </motion.p>

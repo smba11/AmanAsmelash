@@ -1,5 +1,5 @@
 import { Code2, Network } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { LiquidButton } from "@/components/ui/liquid-glass-button"
 import IntroAnimation from "@/components/ui/scroll-morph-hero"
 import { ThemeSwitch } from "@/components/ui/theme-switch-button"
 
@@ -13,18 +13,18 @@ export default function App() {
           </a>
           <nav className="flex items-center gap-2" aria-label="Primary navigation">
             <ThemeSwitch className="border border-border bg-background/70 text-foreground" />
-            <Button asChild variant="ghost" size="sm">
+            <LiquidButton asChild variant="ghost" size="sm">
               <a href="https://www.linkedin.com/in/aman-asmelash-7727472b3/" target="_blank" rel="noreferrer">
                 <Network data-icon="inline-start" />
                 LinkedIn
               </a>
-            </Button>
-            <Button asChild variant="ghost" size="sm">
+            </LiquidButton>
+            <LiquidButton asChild variant="ghost" size="sm">
               <a href="https://github.com/smba11" target="_blank" rel="noreferrer">
                 <Code2 data-icon="inline-start" />
                 GitHub
               </a>
-            </Button>
+            </LiquidButton>
           </nav>
         </div>
       </header>
@@ -61,18 +61,18 @@ export default function App() {
             interface feel sharp.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
-            <Button asChild size="lg">
+            <LiquidButton asChild size="lg">
               <a href="https://www.linkedin.com/in/aman-asmelash-7727472b3/" target="_blank" rel="noreferrer">
                 <Network data-icon="inline-start" />
                 LinkedIn
               </a>
-            </Button>
-            <Button asChild variant="secondary" size="lg">
+            </LiquidButton>
+            <LiquidButton asChild variant="secondary" size="lg">
               <a href="https://github.com/smba11" target="_blank" rel="noreferrer">
                 <Code2 data-icon="inline-start" />
                 GitHub
               </a>
-            </Button>
+            </LiquidButton>
           </div>
         </div>
       </section>
