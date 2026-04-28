@@ -136,11 +136,11 @@ export function FallingPattern({
         />
       </motion.div>
       <div
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0 opacity-55"
         style={{
           backdropFilter: `blur(${blurIntensity})`,
-          backgroundImage: `radial-gradient(circle at 50% 50%, transparent 0, transparent 2px, ${backgroundColor} 2px)`,
-          backgroundSize: `${8 * density}px ${8 * density}px`,
+          backgroundImage: `radial-gradient(circle at 50% 50%, transparent 0, transparent 4px, ${backgroundColor} 4px)`,
+          backgroundSize: `${10 * density}px ${10 * density}px`,
         }}
       />
     </div>

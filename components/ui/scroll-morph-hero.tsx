@@ -21,8 +21,6 @@ const MAX_SCROLL = 3000
 const RELEASE_SCROLL = MAX_SCROLL - 40
 
 const lerp = (start: number, end: number, t: number) => start * (1 - t) + end * t
-const wrap = (value: number, length: number) => ((value % length) + length) % length
-
 function FlipCard({ project, index, target }: FlipCardProps) {
   return (
     <motion.div
@@ -212,13 +210,14 @@ export default function IntroAnimation() {
 
   return (
     <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-background">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,hsl(var(--primary)/0.16),transparent_42%)]" />
       <FallingPattern
-        className="absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_at_center,black_0%,black_58%,transparent_100%)]"
-        color="hsl(var(--primary) / 0.42)"
+        className="absolute inset-0 opacity-100 [mask-image:radial-gradient(ellipse_at_center,black_0%,black_72%,transparent_100%)]"
+        color="hsl(var(--primary) / 0.78)"
         backgroundColor="hsl(var(--background))"
-        blurIntensity="0.8em"
-        density={1.1}
-        duration={170}
+        blurIntensity="0.22em"
+        density={0.78}
+        duration={130}
       />
       <div className="relative z-10 flex h-full w-full flex-col items-center justify-center [perspective:1000px]">
         <div className="absolute left-6 top-6 z-20 md:left-10 md:top-10">
@@ -288,22 +287,21 @@ export default function IntroAnimation() {
 
               const baseRadius = Math.min(containerSize.width, containerSize.height * 1.5)
               const arcRadius = baseRadius * (isMobile ? 1.4 : 1.1)
-              const arcApexY = containerSize.height * (isMobile ? 0.35 : 0.25)
+              const arcApexY = containerSize.height * (isMobile ? 0.38 : 0.28)
               const arcCenterY = arcApexY + arcRadius
-              const spreadAngle = isMobile ? 100 : 130
+              const spreadAngle = isMobile ? 96 : 118
               const startAngle = -90 - spreadAngle / 2
-              const step = spreadAngle / totalProjects
+              const step = spreadAngle / Math.max(totalProjects - 1, 1)
               const scrollProgress = Math.min(Math.max(rotateValue / 360, 0), 1)
-              const carouselOffset = scrollProgress * totalProjects
-              const wrappedIndex = wrap(i - carouselOffset, totalProjects)
-              const currentArcAngle = startAngle + wrappedIndex * step
+              const slideDistance = isMobile ? 220 : 360
+              const currentArcAngle = startAngle + i * step
               const arcRad = (currentArcAngle * Math.PI) / 180
 
               const arcPos = {
-                x: Math.cos(arcRad) * arcRadius + parallaxValue,
+                x: Math.cos(arcRad) * arcRadius - scrollProgress * slideDistance + parallaxValue * 0.25,
                 y: Math.sin(arcRad) * arcRadius + arcCenterY,
                 rotation: currentArcAngle + 90,
-                scale: isMobile ? 1.18 : 1.5,
+                scale: isMobile ? 1.12 : 1.42,
               }
 
               target = {
