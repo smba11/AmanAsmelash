@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { FallingPattern } from "@/components/ui/falling-pattern"
 import { portfolioProjects } from "@/src/projects"
 
 export type AnimationPhase = "scatter" | "line" | "circle" | "bottom-strip"
@@ -210,8 +211,16 @@ export default function IntroAnimation() {
   }, [smoothMorph, smoothMouseX, smoothScrollRotate])
 
   return (
-    <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-[#FAFAFA]">
-      <div className="flex h-full w-full flex-col items-center justify-center [perspective:1000px]">
+    <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-background">
+      <FallingPattern
+        className="absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_at_center,black_0%,black_58%,transparent_100%)]"
+        color="hsl(var(--primary) / 0.42)"
+        backgroundColor="hsl(var(--background))"
+        blurIntensity="0.8em"
+        density={1.1}
+        duration={170}
+      />
+      <div className="relative z-10 flex h-full w-full flex-col items-center justify-center [perspective:1000px]">
         <div className="absolute left-6 top-6 z-20 md:left-10 md:top-10">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Aman Asmelash</p>
         </div>
@@ -225,7 +234,7 @@ export default function IntroAnimation() {
                 : { opacity: 0, filter: "blur(10px)" }
             }
             transition={{ duration: 1 }}
-            className="max-w-52 text-lg font-medium leading-tight tracking-tight text-gray-800 md:max-w-72 md:text-2xl"
+            className="max-w-52 text-lg font-medium leading-tight tracking-tight text-foreground md:max-w-72 md:text-2xl"
           >
             Scroll through the projects.
           </motion.h1>
@@ -233,7 +242,7 @@ export default function IntroAnimation() {
             initial={{ opacity: 0 }}
             animate={introPhase === "circle" && morphValue < 0.5 ? { opacity: 0.5 - morphValue } : { opacity: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="mt-3 text-[10px] font-bold tracking-[0.18em] text-gray-500"
+            className="mt-3 text-[10px] font-bold tracking-[0.18em] text-muted-foreground"
           >
             SCROLL OR SWIPE
           </motion.p>
@@ -248,8 +257,8 @@ export default function IntroAnimation() {
           }}
         >
           <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-primary">selected work</p>
-          <h2 className="mt-3 text-3xl font-semibold leading-tight text-gray-950 md:text-5xl">Projects you can open, inspect, and play with.</h2>
-          <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-gray-600 md:text-base">
+          <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground md:text-5xl">Projects you can open, inspect, and play with.</h2>
+          <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-muted-foreground md:text-base">
             Move through the card arc, hover to enlarge a project, and jump straight into the live build or repo.
           </p>
         </div>
