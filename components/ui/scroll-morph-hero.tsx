@@ -64,17 +64,17 @@ function FlipCard({ project, index, target }: FlipCardProps) {
         </div>
 
         <div
-          className="absolute inset-0 flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-xl border border-[#fff8ea]/45 bg-[#080807] p-4 shadow-[0_18px_30px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,248,234,0.28)]"
+          className="absolute inset-0 flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-xl border border-white/35 bg-neutral-950 p-4 shadow-[0_18px_30px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.26)]"
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
-          <div className="text-center text-[#fff8ea]">
+          <div className="text-center text-white">
             <p className="mb-2 text-[8px] font-bold uppercase tracking-widest text-primary">{project.category}</p>
             <p className="mb-3 line-clamp-2 text-[9px] font-semibold leading-tight">{project.title}</p>
             <a
               href={project.link}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-[#fff8ea]/35 px-3 py-1 text-[10px] font-semibold text-[#fff8ea] underline-offset-4 hover:bg-[#fff8ea] hover:text-[#080807]"
+              className="rounded-full border border-white/35 px-3 py-1 text-[10px] font-semibold text-white underline-offset-4 hover:bg-white hover:text-neutral-950"
             >
               Open
             </a>
