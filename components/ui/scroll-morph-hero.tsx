@@ -46,41 +46,25 @@ function FlipCard({ project, index, target }: FlipCardProps) {
       }}
       className="group cursor-pointer"
     >
-      <motion.div
-        className="relative h-full w-full"
-        style={{ transformStyle: "preserve-3d" }}
-        transition={{ duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
-        whileHover={{ rotateY: 180 }}
+      <motion.a
+        href={project.link}
+        target="_blank"
+        rel="noreferrer"
+        className="relative block h-full w-full overflow-hidden rounded-xl bg-gray-200 shadow-lg outline-none ring-primary/40 transition-shadow focus-visible:ring-4"
+        transition={{ duration: 0.35, type: "spring", stiffness: 260, damping: 22 }}
+        whileHover={{ scale: 1.18, y: -14 }}
+        whileFocus={{ scale: 1.18, y: -14 }}
       >
-        <div
-          className="absolute inset-0 h-full w-full overflow-hidden rounded-xl bg-gray-200 shadow-lg"
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          <img src={project.image} alt={project.title} className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent transition-colors group-hover:from-black/20" />
-          <div className="absolute bottom-1.5 left-1.5 right-1.5 truncate text-[7px] font-bold text-white drop-shadow">
-            {project.title}
-          </div>
+        <img src={project.image} alt={project.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/18 to-transparent transition-colors group-hover:from-black/82" />
+        <div className="absolute inset-x-2 bottom-2 text-white drop-shadow">
+          <p className="mb-1 text-[6px] font-bold uppercase tracking-[0.16em] text-primary">{project.category}</p>
+          <p className="line-clamp-2 text-[8px] font-bold leading-tight">{project.title}</p>
+          <span className="mt-1.5 inline-flex rounded-full border border-white/45 px-2 py-0.5 text-[7px] font-semibold opacity-0 transition-opacity group-hover:opacity-100">
+            Open
+          </span>
         </div>
-
-        <div
-          className="absolute inset-0 flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-xl border border-white/35 bg-neutral-950 p-4 shadow-[0_18px_30px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.26)]"
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-        >
-          <div className="text-center text-white">
-            <p className="mb-2 text-[8px] font-bold uppercase tracking-widest text-primary">{project.category}</p>
-            <p className="mb-3 line-clamp-2 text-[9px] font-semibold leading-tight">{project.title}</p>
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-white/35 px-3 py-1 text-[10px] font-semibold text-white underline-offset-4 hover:bg-white hover:text-neutral-950"
-            >
-              Open
-            </a>
-          </div>
-        </div>
-      </motion.div>
+      </motion.a>
     </motion.div>
   )
 }
@@ -266,7 +250,7 @@ export default function IntroAnimation() {
           <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-primary">selected work</p>
           <h2 className="mt-3 text-3xl font-semibold leading-tight text-gray-950 md:text-5xl">Projects you can open, inspect, and play with.</h2>
           <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-gray-600 md:text-base">
-            Move through the card arc, flip a project, and jump straight into the live build or repo.
+            Move through the card arc, hover to enlarge a project, and jump straight into the live build or repo.
           </p>
         </div>
 
