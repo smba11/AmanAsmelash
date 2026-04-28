@@ -255,6 +255,21 @@ export default function IntroAnimation() {
           </motion.p>
         </div>
 
+        <div
+          className="pointer-events-none absolute left-1/2 top-[31%] z-10 w-[min(86vw,34rem)] -translate-x-1/2 text-center"
+          style={{
+            opacity: Math.max(0, Math.min(1, (morphValue - 0.58) / 0.28)),
+            transform: `translate(-50%, ${16 - Math.max(0, Math.min(1, (morphValue - 0.58) / 0.28)) * 16}px)`,
+            transition: "opacity 160ms ease, transform 160ms ease",
+          }}
+        >
+          <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-primary">selected work</p>
+          <h2 className="mt-3 text-3xl font-semibold leading-tight text-gray-950 md:text-5xl">Projects you can open, inspect, and play with.</h2>
+          <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-gray-600 md:text-base">
+            Move through the card arc, flip a project, and jump straight into the live build or repo.
+          </p>
+        </div>
+
         <div className="relative flex h-full w-full items-center justify-center">
           {projects.map((project, i) => {
             let target = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 }
