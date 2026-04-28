@@ -11,9 +11,9 @@ const liquidButtonVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-foreground duration-300 hover:scale-105 dark:text-foreground",
-        secondary: "text-foreground duration-300 hover:scale-105 dark:text-foreground",
-        ghost: "text-muted-foreground duration-300 hover:scale-105 hover:text-foreground dark:text-foreground/80 dark:hover:text-foreground",
+        default: "text-neutral-950 duration-300 hover:scale-105",
+        secondary: "text-neutral-950 duration-300 hover:scale-105",
+        ghost: "text-neutral-950 duration-300 hover:scale-105",
       },
       size: {
         sm: "h-9 px-4 text-xs",
@@ -47,7 +47,7 @@ function LiquidButton({
     <Comp
       data-slot="button"
       className={cn(
-        "relative isolate overflow-hidden rounded-full border border-white/35 bg-white/15 shadow-[0_10px_24px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_1px_rgba(255,255,255,0.72),inset_0_-10px_18px_rgba(255,255,255,0.08),inset_0_0_16px_rgba(255,255,255,0.12)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-[1px] before:-z-10 before:rounded-full before:bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.34),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.2),rgba(255,255,255,0.04)_52%,rgba(255,255,255,0.12))] after:pointer-events-none after:absolute after:inset-x-6 after:top-1.5 after:h-px after:rounded-full after:bg-white/70 dark:border-white/18 dark:bg-white/8 dark:shadow-[0_14px_28px_rgba(0,0,0,0.28),0_3px_10px_rgba(0,0,0,0.18),inset_0_1px_1px_rgba(255,255,255,0.42),inset_0_-10px_18px_rgba(255,255,255,0.06),inset_0_0_16px_rgba(255,255,255,0.08)]",
+        "relative isolate overflow-hidden rounded-full border border-black/45 bg-white/55 font-semibold shadow-[0_10px_22px_rgba(0,0,0,0.18),0_3px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-14px_24px_rgba(0,0,0,0.12),inset_0_0_18px_rgba(255,255,255,0.75)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-[1px] before:-z-10 before:rounded-full before:bg-[linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.56)_42%,rgba(230,230,230,0.36)_72%,rgba(255,255,255,0.72))] after:pointer-events-none after:absolute after:inset-x-7 after:top-1.5 after:h-px after:rounded-full after:bg-white/95 hover:bg-white/70 dark:border-white/55 dark:bg-white/65 dark:shadow-[0_12px_26px_rgba(0,0,0,0.32),0_4px_10px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-14px_24px_rgba(0,0,0,0.14),inset_0_0_18px_rgba(255,255,255,0.72)]",
         liquidButtonVariants({ variant, size, className }),
       )}
       {...props}

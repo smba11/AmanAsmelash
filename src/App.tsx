@@ -1,5 +1,4 @@
-import { Code2, Network } from "lucide-react"
-import CloudWatchContact from "@/components/ui/cloud-watch-contact"
+import { Code2, Mail, Network } from "lucide-react"
 import { LiquidButton } from "@/components/ui/liquid-glass-button"
 import IntroAnimation from "@/components/ui/scroll-morph-hero"
 import { ThemeSwitch } from "@/components/ui/theme-switch-button"
@@ -54,30 +53,21 @@ export default function App() {
       </section>
 
       <section id="contact" className="mx-auto grid min-h-screen max-w-6xl place-items-center px-5 py-24">
-        <div className="grid w-full gap-12 md:grid-cols-[1fr_0.9fr] md:items-center">
-          <div className="max-w-3xl">
-            <p className="font-mono text-sm text-primary">&gt; contact</p>
-            <h2 className="mt-4 text-4xl font-semibold leading-tight md:text-6xl">Want to build something or talk through an idea?</h2>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-              Reach out through LinkedIn or GitHub. I am always down to compare notes on projects, products, and what makes an
-              interface feel sharp.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <LiquidButton asChild size="lg">
-                <a href="https://www.linkedin.com/in/aman-asmelash-7727472b3/" target="_blank" rel="noreferrer">
-                  <Network data-icon="inline-start" />
-                  LinkedIn
-                </a>
-              </LiquidButton>
-              <LiquidButton asChild variant="secondary" size="lg">
-                <a href="https://github.com/smba11" target="_blank" rel="noreferrer">
-                  <Code2 data-icon="inline-start" />
-                  GitHub
-                </a>
-              </LiquidButton>
-            </div>
+        <div className="w-full max-w-3xl">
+          <p className="font-mono text-sm text-primary">&gt; contact</p>
+          <h2 className="mt-4 text-4xl font-semibold leading-tight md:text-6xl">Want to build something or talk through an idea?</h2>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+            Send me an email and I will get back to you when I can. I am always down to compare notes on projects, products, and
+            what makes an interface feel sharp.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <LiquidButton asChild size="xl">
+              <a href="mailto:simba.1w34@gmail.com">
+                <Mail data-icon="inline-start" />
+                Email me
+              </a>
+            </LiquidButton>
           </div>
-          <CloudWatchContact />
         </div>
       </section>
     </main>
