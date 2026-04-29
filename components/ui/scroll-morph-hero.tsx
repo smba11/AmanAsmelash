@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { FallingPattern } from "@/components/ui/falling-pattern"
 import { portfolioProjects } from "@/src/projects"
 
 export type AnimationPhase = "scatter" | "line" | "circle" | "bottom-strip"
@@ -152,25 +151,6 @@ export default function IntroAnimation() {
 
   const morphProgress = useTransform(virtualScroll, [0, 600], [0, 1])
   const smoothMorph = useSpring(morphProgress, { stiffness: 40, damping: 20 })
-  const scrollRotate = useTransform(virtualScroll, [600, 3000], [0, 360])
-  const smoothScrollRotate = useSpring(scrollRotate, { stiffness: 40, damping: 20 })
-  const mouseX = useMotionValue(0)
-  const smoothMouseX = useSpring(mouseX, { stiffness: 30, damping: 20 })
-
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect()
-      const relativeX = e.clientX - rect.left
-      const normalizedX = (relativeX / rect.width) * 2 - 1
-      mouseX.set(normalizedX * 100)
-    }
-    container.addEventListener("mousemove", handleMouseMove)
-    return () => container.removeEventListener("mousemove", handleMouseMove)
-  }, [mouseX])
-
   useEffect(() => {
     const timer1 = setTimeout(() => setIntroPhase("line"), 500)
     const timer2 = setTimeout(() => setIntroPhase("circle"), 2500)
@@ -194,31 +174,17 @@ export default function IntroAnimation() {
   }, [projects])
 
   const [morphValue, setMorphValue] = useState(0)
-  const [rotateValue, setRotateValue] = useState(0)
-  const [parallaxValue, setParallaxValue] = useState(0)
 
   useEffect(() => {
     const unsubscribeMorph = smoothMorph.on("change", setMorphValue)
-    const unsubscribeRotate = smoothScrollRotate.on("change", setRotateValue)
-    const unsubscribeParallax = smoothMouseX.on("change", setParallaxValue)
     return () => {
       unsubscribeMorph()
-      unsubscribeRotate()
-      unsubscribeParallax()
     }
-  }, [smoothMorph, smoothMouseX, smoothScrollRotate])
+  }, [smoothMorph])
 
   return (
     <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-background">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,hsl(var(--primary)/0.16),transparent_42%)]" />
-      <FallingPattern
-        className="absolute inset-0 opacity-100 [mask-image:radial-gradient(ellipse_at_center,black_0%,black_72%,transparent_100%)]"
-        color="hsl(var(--primary) / 0.78)"
-        backgroundColor="hsl(var(--background))"
-        blurIntensity="0.22em"
-        density={0.78}
-        duration={130}
-      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_25%,hsl(var(--primary)/0.18),transparent_34%),linear-gradient(180deg,hsl(var(--background)),hsl(var(--secondary)/0.65))]" />
       <div className="relative z-10 flex h-full w-full flex-col items-center justify-center [perspective:1000px]">
         <div className="absolute left-6 top-6 z-20 md:left-10 md:top-10">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Aman Asmelash</p>
@@ -292,13 +258,11 @@ export default function IntroAnimation() {
               const spreadAngle = isMobile ? 96 : 118
               const startAngle = -90 - spreadAngle / 2
               const step = spreadAngle / Math.max(totalProjects - 1, 1)
-              const scrollProgress = Math.min(Math.max(rotateValue / 360, 0), 1)
-              const slideDistance = isMobile ? 220 : 360
               const currentArcAngle = startAngle + i * step
               const arcRad = (currentArcAngle * Math.PI) / 180
 
               const arcPos = {
-                x: Math.cos(arcRad) * arcRadius - scrollProgress * slideDistance + parallaxValue * 0.25,
+                x: Math.cos(arcRad) * arcRadius,
                 y: Math.sin(arcRad) * arcRadius + arcCenterY,
                 rotation: currentArcAngle + 90,
                 scale: isMobile ? 1.12 : 1.42,

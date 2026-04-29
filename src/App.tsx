@@ -2,6 +2,7 @@ import { Code2, Mail, Network } from "lucide-react"
 import { LiquidButton } from "@/components/ui/liquid-glass-button"
 import IntroAnimation from "@/components/ui/scroll-morph-hero"
 import { ThemeSwitch } from "@/components/ui/theme-switch-button"
+import { ProjectGallery } from "@/components/project-gallery"
 
 export default function App() {
   return (
@@ -39,7 +40,7 @@ export default function App() {
             <p className="font-mono text-sm text-primary">&gt; about</p>
             <h2 className="mt-4 text-4xl font-semibold leading-tight md:text-6xl">I build small ideas until they feel real.</h2>
           </div>
-          <div className="space-y-6 text-lg leading-8 text-muted-foreground">
+          <div className="flex flex-col gap-6 text-lg leading-8 text-muted-foreground">
             <p>
               I am Aman Asmelash, a developer who likes turning rough ideas into usable web experiences. My projects move between
               games, music tools, planning helpers, and experiments that help me sharpen the way products feel.
@@ -51,6 +52,8 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      <ProjectGallery />
 
       <section id="contact" className="mx-auto grid min-h-screen max-w-6xl place-items-center px-5 py-24">
         <div className="w-full max-w-3xl">
