@@ -16,8 +16,9 @@ interface FlipCardProps {
 
 const IMG_WIDTH = 92
 const IMG_HEIGHT = 130
-const MAX_SCROLL = 3000
+const MAX_SCROLL = 1300
 const RELEASE_SCROLL = MAX_SCROLL - 40
+const MORPH_END = 360
 
 const lerp = (start: number, end: number, t: number) => start * (1 - t) + end * t
 function FlipCard({ project, index, target }: FlipCardProps) {
@@ -149,11 +150,13 @@ export default function IntroAnimation() {
     }
   }, [virtualScroll])
 
-  const morphProgress = useTransform(virtualScroll, [0, 600], [0, 1])
-  const smoothMorph = useSpring(morphProgress, { stiffness: 40, damping: 20 })
+  const morphProgress = useTransform(virtualScroll, [0, MORPH_END], [0, 1])
+  const smoothMorph = useSpring(morphProgress, { stiffness: 58, damping: 19 })
+  const browseProgress = useTransform(virtualScroll, [MORPH_END, MAX_SCROLL], [0, 1])
+  const smoothBrowse = useSpring(browseProgress, { stiffness: 70, damping: 22 })
   useEffect(() => {
-    const timer1 = setTimeout(() => setIntroPhase("line"), 500)
-    const timer2 = setTimeout(() => setIntroPhase("circle"), 2500)
+    const timer1 = setTimeout(() => setIntroPhase("line"), 260)
+    const timer2 = setTimeout(() => setIntroPhase("circle"), 1050)
     return () => {
       clearTimeout(timer1)
       clearTimeout(timer2)
@@ -174,17 +177,20 @@ export default function IntroAnimation() {
   }, [projects])
 
   const [morphValue, setMorphValue] = useState(0)
+  const [browseValue, setBrowseValue] = useState(0)
 
   useEffect(() => {
     const unsubscribeMorph = smoothMorph.on("change", setMorphValue)
+    const unsubscribeBrowse = smoothBrowse.on("change", setBrowseValue)
     return () => {
       unsubscribeMorph()
+      unsubscribeBrowse()
     }
-  }, [smoothMorph])
+  }, [smoothBrowse, smoothMorph])
 
   return (
     <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-background">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_25%,hsl(var(--primary)/0.18),transparent_34%),linear-gradient(180deg,hsl(var(--background)),hsl(var(--secondary)/0.65))]" />
+      <div className="absolute inset-0 bg-background" />
       <div className="relative z-10 flex h-full w-full flex-col items-center justify-center [perspective:1000px]">
         <div className="absolute left-6 top-6 z-20 md:left-10 md:top-10">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Aman Asmelash</p>
@@ -214,10 +220,10 @@ export default function IntroAnimation() {
         </div>
 
         <div
-          className="pointer-events-none absolute left-1/2 top-[31%] z-10 w-[min(86vw,34rem)] -translate-x-1/2 text-center"
+          className="pointer-events-none absolute left-1/2 top-[28%] z-10 w-[min(86vw,34rem)] -translate-x-1/2 text-center"
           style={{
-            opacity: Math.max(0, Math.min(1, (morphValue - 0.58) / 0.28)),
-            transform: `translate(-50%, ${16 - Math.max(0, Math.min(1, (morphValue - 0.58) / 0.28)) * 16}px)`,
+            opacity: Math.max(0, Math.min(1, (morphValue - 0.42) / 0.24)),
+            transform: `translate(-50%, ${12 - Math.max(0, Math.min(1, (morphValue - 0.42) / 0.24)) * 12}px)`,
             transition: "opacity 160ms ease, transform 160ms ease",
           }}
         >
@@ -251,21 +257,23 @@ export default function IntroAnimation() {
                 rotation: circleAngle + 90,
               }
 
-              const baseRadius = Math.min(containerSize.width, containerSize.height * 1.5)
-              const arcRadius = baseRadius * (isMobile ? 1.4 : 1.1)
-              const arcApexY = containerSize.height * (isMobile ? 0.38 : 0.28)
+              const arcRadius = Math.min(containerSize.width * (isMobile ? 0.88 : 0.55), containerSize.height * (isMobile ? 0.98 : 0.78))
+              const arcApexY = containerSize.height * (isMobile ? 0.58 : 0.56)
               const arcCenterY = arcApexY + arcRadius
-              const spreadAngle = isMobile ? 96 : 118
-              const startAngle = -90 - spreadAngle / 2
-              const step = spreadAngle / Math.max(totalProjects - 1, 1)
-              const currentArcAngle = startAngle + i * step
+              const step = isMobile ? 19 : 16
+              const visibleLimit = isMobile ? 76 : 72
+              const centeredIndex = browseValue * Math.max(totalProjects - 1, 1)
+              const relativeIndex = i - centeredIndex
+              const currentArcAngle = -90 + relativeIndex * step
               const arcRad = (currentArcAngle * Math.PI) / 180
+              const distanceFromCenter = Math.abs(relativeIndex)
+              const visibleOpacity = Math.max(0.18, 1 - Math.max(0, Math.abs(currentArcAngle + 90) - visibleLimit) / 28)
 
               const arcPos = {
                 x: Math.cos(arcRad) * arcRadius,
                 y: Math.sin(arcRad) * arcRadius + arcCenterY,
                 rotation: currentArcAngle + 90,
-                scale: isMobile ? 1.12 : 1.42,
+                scale: (isMobile ? 1.08 : 1.32) * Math.max(0.82, 1 - distanceFromCenter * 0.035),
               }
 
               target = {
@@ -273,7 +281,7 @@ export default function IntroAnimation() {
                 y: lerp(circlePos.y, arcPos.y, morphValue),
                 rotation: lerp(circlePos.rotation, arcPos.rotation, morphValue),
                 scale: lerp(1, arcPos.scale, morphValue),
-                opacity: 1,
+                opacity: lerp(1, visibleOpacity, morphValue),
               }
             }
 

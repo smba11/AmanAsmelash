@@ -11,9 +11,9 @@ const liquidButtonVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-primary/35 bg-secondary/80 text-secondary-foreground shadow-[0_10px_24px_hsl(var(--primary)/0.14)] hover:scale-105 hover:border-primary/55 hover:bg-secondary",
-        secondary: "border-border bg-background/80 text-foreground shadow-[0_10px_24px_hsl(var(--foreground)/0.08)] hover:scale-105 hover:border-primary/45 hover:bg-secondary/80",
-        ghost: "border-border/70 bg-background/55 text-foreground shadow-[0_10px_24px_hsl(var(--foreground)/0.08)] hover:scale-105 hover:border-primary/40 hover:bg-secondary/75",
+        default: "border-primary/45 bg-secondary text-secondary-foreground hover:border-primary/65 hover:bg-secondary/80",
+        secondary: "border-border bg-background text-foreground hover:border-primary/45 hover:bg-secondary/80",
+        ghost: "border-border bg-background text-foreground hover:border-primary/40 hover:bg-secondary/75",
       },
       size: {
         sm: "h-9 px-5 text-xs",
@@ -47,7 +47,6 @@ function LiquidButton({
     <Comp
       data-slot="button"
       className={cn(
-        "backdrop-blur-md",
         liquidButtonVariants({ variant, size, className }),
       )}
       {...props}

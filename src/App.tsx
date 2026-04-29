@@ -1,19 +1,28 @@
-import { Code2, Mail, Network } from "lucide-react"
+import { useCallback, useState } from "react"
+import { Code2, Images, Mail, Network } from "lucide-react"
 import { LiquidButton } from "@/components/ui/liquid-glass-button"
 import IntroAnimation from "@/components/ui/scroll-morph-hero"
 import { ThemeSwitch } from "@/components/ui/theme-switch-button"
 import { ProjectGallery } from "@/components/project-gallery"
 
 export default function App() {
+  const [galleryOpen, setGalleryOpen] = useState(false)
+  const openGallery = useCallback(() => setGalleryOpen(true), [])
+  const closeGallery = useCallback(() => setGalleryOpen(false), [])
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <header className="fixed left-0 right-0 top-0 z-40 border-b border-border/40 bg-background/50 backdrop-blur">
+      <header className="fixed left-0 right-0 top-0 z-40 border-b bg-background/95">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
           <a href="https://github.com/smba11/AmanAsmelash" className="font-semibold">
             Aman Asmelash
           </a>
           <nav className="flex items-center gap-2" aria-label="Primary navigation">
             <ThemeSwitch className="border border-border bg-background/70 text-foreground" />
+            <LiquidButton type="button" variant="ghost" size="sm" onClick={openGallery}>
+              <Images data-icon="inline-start" />
+              Gallery
+            </LiquidButton>
             <LiquidButton asChild variant="ghost" size="sm">
               <a href="https://www.linkedin.com/in/aman-asmelash-7727472b3/" target="_blank" rel="noreferrer">
                 <Network data-icon="inline-start" />
@@ -49,11 +58,15 @@ export default function App() {
               This site is meant to be a living shelf for that work: quick to browse, visual first, and easy to keep adding to as
               the projects grow.
             </p>
+            <div>
+              <LiquidButton type="button" variant="secondary" onClick={openGallery}>
+                <Images data-icon="inline-start" />
+                Open screenshot gallery
+              </LiquidButton>
+            </div>
           </div>
         </div>
       </section>
-
-      <ProjectGallery />
 
       <section id="contact" className="mx-auto grid min-h-screen max-w-6xl place-items-center px-5 py-24">
         <div className="w-full max-w-3xl">
@@ -73,6 +86,8 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      {galleryOpen ? <ProjectGallery onClose={closeGallery} /> : null}
     </main>
   )
 }
