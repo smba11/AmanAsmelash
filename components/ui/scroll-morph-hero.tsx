@@ -258,7 +258,7 @@ export default function IntroAnimation() {
               }
 
               const arcRadius = Math.min(containerSize.width * (isMobile ? 0.88 : 0.55), containerSize.height * (isMobile ? 0.98 : 0.78))
-              const arcApexY = containerSize.height * (isMobile ? 0.58 : 0.56)
+              const arcApexY = containerSize.height * (isMobile ? 0.22 : 0.18)
               const arcCenterY = arcApexY + arcRadius
               const step = isMobile ? 19 : 16
               const visibleLimit = isMobile ? 76 : 72
