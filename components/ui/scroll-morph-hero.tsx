@@ -191,14 +191,6 @@ export default function IntroAnimation() {
   return (
     <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-background">
       <div className="absolute inset-0 bg-background" />
-      <div className="pointer-events-none absolute left-0 right-0 top-[4.5rem] h-36 overflow-hidden border-y bg-secondary/40 md:h-40">
-        <img
-          src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1800&q=80"
-          alt=""
-          className="size-full object-cover object-center opacity-55 grayscale contrast-110 dark:opacity-32"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/45 to-background" />
-      </div>
       <div className="relative z-10 flex h-full w-full flex-col items-center justify-center [perspective:1000px]">
         <div className="pointer-events-none absolute top-1/2 z-0 flex -translate-y-1/2 flex-col items-center justify-center text-center">
           <motion.h1
@@ -224,7 +216,7 @@ export default function IntroAnimation() {
         </div>
 
         <div
-          className="pointer-events-none absolute left-1/2 top-[28%] z-10 w-[min(86vw,34rem)] -translate-x-1/2 text-center"
+          className="pointer-events-none absolute left-1/2 top-[26%] z-10 w-[min(90vw,34rem)] -translate-x-1/2 text-center md:top-[28%]"
           style={{
             opacity: Math.max(0, Math.min(1, (morphValue - 0.42) / 0.24)),
             transform: `translate(-50%, ${12 - Math.max(0, Math.min(1, (morphValue - 0.42) / 0.24)) * 12}px)`,
@@ -232,8 +224,8 @@ export default function IntroAnimation() {
           }}
         >
           <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-primary">selected work</p>
-          <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground md:text-5xl">Projects you can open, inspect, and play with.</h2>
-          <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-muted-foreground md:text-base">
+          <h2 className="mt-3 text-2xl font-semibold leading-tight text-foreground sm:text-3xl md:text-5xl">Projects you can open, inspect, and play with.</h2>
+          <p className="mx-auto mt-3 max-w-md text-xs leading-5 text-muted-foreground sm:text-sm md:mt-4 md:text-base md:leading-6">
             Move through the card arc, hover to enlarge a project, and jump straight into the live build or repo.
           </p>
         </div>

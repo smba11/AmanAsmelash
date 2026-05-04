@@ -16,7 +16,7 @@ const liquidButtonVariants = cva(
         ghost: "border-border bg-background text-foreground hover:border-primary/40 hover:bg-secondary/75",
       },
       size: {
-        sm: "h-9 px-5 text-xs",
+        sm: "h-8 px-3 text-xs md:h-9 md:px-5",
         default: "h-11 px-6",
         lg: "h-12 px-8",
         xl: "h-14 px-10 text-base",
