@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react"
-import { Code2, Images, Mail, Network } from "lucide-react"
+import { Code2, Images, Network } from "lucide-react"
+import { ContactTerminal } from "@/components/contact-terminal"
 import { LiquidButton } from "@/components/ui/liquid-glass-button"
 import IntroAnimation from "@/components/ui/scroll-morph-hero"
 import { ThemeSwitch } from "@/components/ui/theme-switch-button"
@@ -68,24 +69,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="contact" className="mx-auto grid min-h-screen max-w-6xl place-items-center px-5 py-20 md:py-24">
-        <div className="w-full max-w-3xl">
-          <p className="font-mono text-sm text-primary">&gt; contact</p>
-          <h2 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl md:text-6xl">Want to build something or talk through an idea?</h2>
-          <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg md:leading-8">
-            Send me an email and I will get back to you when I can. I am always down to compare notes on projects, products, and
-            what makes an interface feel sharp.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <LiquidButton asChild size="xl">
-              <a href="mailto:simba.1w34@gmail.com">
-                <Mail data-icon="inline-start" />
-                Email me
-              </a>
-            </LiquidButton>
-          </div>
-        </div>
-      </section>
+      <ContactTerminal />
 
       {galleryOpen ? <ProjectGallery onClose={closeGallery} /> : null}
     </main>
