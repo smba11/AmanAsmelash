@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
-import { Code2, Images, Network } from "lucide-react"
-import { ContactTerminal } from "@/components/contact-terminal"
+import { Code2, Images, Mail, Network } from "lucide-react"
+import { ContactModal } from "@/components/contact-modal"
 import { LiquidButton } from "@/components/ui/liquid-glass-button"
 import IntroAnimation from "@/components/ui/scroll-morph-hero"
 import { ThemeSwitch } from "@/components/ui/theme-switch-button"
@@ -8,8 +8,11 @@ import { ProjectGallery } from "@/components/project-gallery"
 
 export default function App() {
   const [galleryOpen, setGalleryOpen] = useState(false)
+  const [contactOpen, setContactOpen] = useState(false)
   const openGallery = useCallback(() => setGalleryOpen(true), [])
   const closeGallery = useCallback(() => setGalleryOpen(false), [])
+  const openContact = useCallback(() => setContactOpen(true), [])
+  const closeContact = useCallback(() => setContactOpen(false), [])
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
@@ -23,6 +26,10 @@ export default function App() {
             <LiquidButton type="button" variant="ghost" size="sm" onClick={openGallery} aria-label="Open gallery">
               <Images data-icon="inline-start" />
               <span className="hidden sm:inline">Gallery</span>
+            </LiquidButton>
+            <LiquidButton type="button" variant="ghost" size="sm" onClick={openContact} aria-label="Contact">
+              <Mail data-icon="inline-start" />
+              <span className="hidden sm:inline">Contact</span>
             </LiquidButton>
             <LiquidButton asChild variant="ghost" size="sm">
               <a href="https://www.linkedin.com/in/aman-asmelash-7727472b3/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
@@ -69,9 +76,25 @@ export default function App() {
         </div>
       </section>
 
-      <ContactTerminal />
+      <section id="contact" className="mx-auto grid min-h-screen max-w-6xl place-items-center px-5 py-20 md:py-24">
+        <div className="w-full max-w-3xl">
+          <p className="font-mono text-sm text-primary">&gt; contact</p>
+          <h2 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl md:text-6xl">Want to build something or talk through an idea?</h2>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg md:leading-8">
+            Send me an email and I will get back to you when I can. I am always down to compare notes on projects, products, and
+            what makes an interface feel sharp.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <LiquidButton type="button" size="xl" onClick={openContact}>
+              <Mail data-icon="inline-start" />
+              Email me
+            </LiquidButton>
+          </div>
+        </div>
+      </section>
 
       {galleryOpen ? <ProjectGallery onClose={closeGallery} /> : null}
+      <ContactModal open={contactOpen} onClose={closeContact} />
     </main>
   )
 }
