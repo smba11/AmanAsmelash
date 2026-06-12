@@ -2,7 +2,6 @@
 
 import { FormEvent, useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { X } from "lucide-react"
 
 const CONTACT_EMAIL = "simba.1w34@gmail.com"
 
@@ -16,9 +15,14 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
   const [sent, setSent] = useState(false)
+  const [minimized, setMinimized] = useState(false)
+  const [expanded, setExpanded] = useState(false)
 
   useEffect(() => {
     if (!open) return
+
+    setMinimized(false)
+    setExpanded(false)
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -64,28 +68,45 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full max-w-3xl overflow-hidden rounded-2xl border border-white/12 bg-[#070b12]/82 text-slate-100 shadow-[0_28px_90px_rgba(0,0,0,0.38)] backdrop-blur-2xl"
+            className={`relative w-full overflow-hidden rounded-2xl border border-white/12 bg-[#070b12]/82 text-slate-100 shadow-[0_28px_90px_rgba(0,0,0,0.38)] backdrop-blur-2xl transition-[max-width] duration-300 ${
+              expanded ? "max-w-5xl" : "max-w-3xl"
+            }`}
           >
             <div className="grid h-11 grid-cols-[1fr_auto_1fr] items-center border-b border-white/10 bg-white/[0.04] px-4">
               <div className="flex items-center gap-2">
-                <span className="size-3 rounded-full bg-[#ff5f57]" />
-                <span className="size-3 rounded-full bg-[#ffbd2e]" />
-                <span className="size-3 rounded-full bg-[#28c840]" />
-              </div>
-              <p className="font-mono text-xs text-slate-400">aman — ~/feedback</p>
-              <div className="flex justify-end">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="grid size-7 place-items-center rounded-md text-slate-400 transition-colors hover:bg-white/10 hover:text-slate-100"
+                  className="size-3 rounded-full bg-[#ff5f57] ring-white/0 transition hover:ring-4 hover:ring-white/10 focus:outline-none focus:ring-4 focus:ring-[#ff5f57]/25"
                   aria-label="Close contact panel"
-                >
-                  <X className="size-4" />
-                </button>
+                />
+                <button
+                  type="button"
+                  onClick={() => setMinimized((value) => !value)}
+                  className="size-3 rounded-full bg-[#ffbd2e] ring-white/0 transition hover:ring-4 hover:ring-white/10 focus:outline-none focus:ring-4 focus:ring-[#ffbd2e]/25"
+                  aria-label={minimized ? "Restore contact panel" : "Minimize contact panel"}
+                />
+                <button
+                  type="button"
+                  onClick={() => setExpanded((value) => !value)}
+                  className="size-3 rounded-full bg-[#28c840] ring-white/0 transition hover:ring-4 hover:ring-white/10 focus:outline-none focus:ring-4 focus:ring-[#28c840]/25"
+                  aria-label={expanded ? "Reduce contact panel" : "Expand contact panel"}
+                />
               </div>
+              <p className="font-mono text-xs text-slate-400">aman — ~/feedback</p>
+              <div />
             </div>
 
-            <div className="relative">
+            <AnimatePresence initial={false}>
+              {!minimized ? (
+                <motion.div
+                  key="contact-modal-body"
+                  className="relative"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.22, ease: "easeInOut" }}
+                >
               <div
                 className="pointer-events-none absolute inset-0 opacity-[0.06]"
                 style={{
@@ -156,7 +177,9 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
                   </p>
                 </div>
               </form>
-            </div>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
           </motion.div>
         </motion.div>
       ) : null}
